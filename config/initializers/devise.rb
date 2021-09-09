@@ -19,6 +19,20 @@ Devise.setup do |config|
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
+  config.jwt do |jwt|
+      jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
+      # on every post request to login call, append JWT token to Authorization header as “Bearer” + token when there’s a successful response sent back
+      jwt.dispatch_requests = [
+        ['POST', %r{^/login$}]
+      ]
+      # on a delete call to logout endpoint, the token should be revoked
+      jwt.revocation_requests = [
+        ['DELETE', %r{^/logout$}]
+      ]
+      # the jwt.expiration_time sets the expiration time for the generated token
+      jwt.expiration_time = 30.minutes.to_i
+  end
+
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
