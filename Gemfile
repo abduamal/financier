@@ -18,7 +18,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 gem 'devise-jwt'
 gem 'awesome_print'
-gem 'active_model_serializers'
+gem 'fast_jsonapi'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
