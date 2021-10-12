@@ -4,17 +4,17 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = Account.where(user_id: @user)
-    render json: @accounts
+    render json: AccountSerializer.new(@accounts)
   end
 
   def show
-    render json: @account
+    render json: AccountSerializer.new(@account)
   end
 
   def create
     @account = @user.accounts.new(account_params)
     if @account.save
-        render json: @account
+        render json: AccountSerializer.new(@account)
     else
         render json: { message: 'Error creating account' }, status: :bad_request
     end
@@ -22,7 +22,7 @@ class AccountsController < ApplicationController
 
   def update
     if @account.update(account_params)
-        render json: @account
+        render json: AccountSerializer.new(@account)
     else
         render json: { message: 'Error updating account' }, status: :bad_request
     end
@@ -30,7 +30,7 @@ class AccountsController < ApplicationController
 
   def destroy
     if @account.destroy
-      render json: @accounts
+      render json: AccountSerializer.new(@account)
     else
       render json: {message: 'Oops...something went wrong'}
     end
